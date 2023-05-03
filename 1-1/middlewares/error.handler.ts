@@ -5,28 +5,31 @@ import {
   ErrorRequestHandler,
   RequestHandler,
 } from "express";
-import { AppError } from "../dto";
-import { error } from "console";
+import  AppError  from "../utils/AppError";
 
 export const notFoundErrorHandler: RequestHandler = (
   _req: Request,
   _res: Response,
   next: NextFunction
 ) => {
-  next(new AppError("Not Found", 404));
+  next(new AppError(
+    "We're sorry, the requested employee could not be found.", "Not Found", 404));
 };
 
-export const errorHandler: ErrorRequestHandler = (
-  err: AppError | any,
+export const badRequest = (
   _req: Request,
-  res: Response,
-  _next: NextFunction
+  _res: Response,
+  next: NextFunction
 ) => {
-  if (err instanceof AppError) {
-    res.status(err.code).send(err.message);
-  } else {
-    console.log(err);
-    
-    res.status(500).send("Internal server error");
-  }
+  next(new AppError(
+    "Bad request. Please ensure that all required fields are filled in correctly and try again.", "fail", 400));
+};
+
+export const errorHandler = (
+  _req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  next(new AppError(
+    "Sorry, we encountered an unexpected error while processing your request. Our team has been notified and we are working to resolve the issue as soon as possible. Please try again later.", "error", 500));
 };
