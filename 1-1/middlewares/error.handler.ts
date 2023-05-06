@@ -2,7 +2,6 @@ import {
   Request,
   Response,
   NextFunction,
-  ErrorRequestHandler,
   RequestHandler,
 } from "express";
 import  AppError  from "../utils/AppError";

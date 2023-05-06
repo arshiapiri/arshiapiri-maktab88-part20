@@ -2,7 +2,7 @@ import express, { Express } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import router from "./routes/index";
-import { errorHandler, notFoundErrorHandler,badRequest } from "./middlewares/error.handler";
+import { badRequest, errorHandler, notFoundErrorHandler } from "./middlewares/error.handler";
 import   mongoose  from "mongoose";
 
 mongoose
@@ -11,7 +11,7 @@ mongoose
     console.log("MongoDB connected!");
   })
   .catch(() => {
-    console.log(1);
+     console.log("mongoDB Not Connect!");
   });
 
 const app: Express = express();
@@ -24,7 +24,7 @@ app.use(cookieParser());
 
 app.use("/", router);
 app.use(notFoundErrorHandler);
-app.use(badRequest);
-app.use(errorHandler);
+app.use(errorHandler)
+app.use(badRequest)
 
 export default app;

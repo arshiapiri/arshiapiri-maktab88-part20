@@ -8,6 +8,9 @@ class AppError extends Error {
     this.status = status;
     this.statusCode = statusCode
   }
+  static notFound(message: string) {
+    return new AppError(message, "fail", 404);
+  }
 }
 
 export default AppError
